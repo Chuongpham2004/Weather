@@ -39,12 +39,12 @@
         }
     },
     "result": {
-        "title": "Weather in {city}, {country} | Hourly Forecast",
-        "description": "Weather in {city}: {temp}°C, {condition}. View detailed hourly and 5-day forecasts.",
+        "title": "Weather in %s, %s | Hourly Forecast",
+        "description": "Weather in %s: %s°C, %s. View detailed hourly and 5-day forecasts.",
         "breadcrumb": {
             "home": "Home"
         },
-        "updatedAt": "Updated: {time}, {date}",
+        "updatedAt": "Updated: %s, %s",
         "feelsLike": "Feels like",
         "searchAnother": "Search another city...",
         "searchButton": "Search",
@@ -142,7 +142,7 @@
     },
     "weather": {
         "errors": {
-            "notFound": "City \"{city}\" not found. Please check the city name.",
+            "notFound": "City \"%s\" not found. Please check the city name.",
             "invalidApiKey": "Invalid API key. Please contact administrator.",
             "rateLimit": "Request limit exceeded. Please try again in a few minutes.",
             "generic": "Unable to fetch weather data. Please try again later."

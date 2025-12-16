@@ -39,12 +39,12 @@
         }
     },
     "result": {
-        "title": "Thời tiết {city}, {country} | Dự báo theo giờ",
-        "description": "Thời tiết {city}: {temp}°C, {condition}. Xem dự báo thời tiết theo giờ và 5 ngày tới.",
+        "title": "Thời tiết %s, %s | Dự báo theo giờ",
+        "description": "Thời tiết %s: %s°C, %s. Xem dự báo thời tiết theo giờ và 5 ngày tới.",
         "breadcrumb": {
             "home": "Trang chủ"
         },
-        "updatedAt": "Cập nhật: {time}, {date}",
+        "updatedAt": "Cập nhật: %s, %s",
         "feelsLike": "Cảm giác như",
         "searchAnother": "Tìm thành phố khác...",
         "searchButton": "Tìm",
@@ -142,7 +142,7 @@
     },
     "weather": {
         "errors": {
-            "notFound": "Không tìm thấy thành phố \"{city}\". Vui lòng kiểm tra lại tên thành phố.",
+            "notFound": "Không tìm thấy thành phố \"%s\". Vui lòng kiểm tra lại tên thành phố.",
             "invalidApiKey": "API key không hợp lệ. Vui lòng liên hệ quản trị viên.",
             "rateLimit": "Đã vượt quá giới hạn request. Vui lòng thử lại sau ít phút.",
             "generic": "Không thể lấy dữ liệu thời tiết. Vui lòng thử lại sau."

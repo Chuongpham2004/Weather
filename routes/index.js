@@ -23,8 +23,8 @@ router.get('/weather', async function (req, res, next) {
   const weather = await weatherService.getWeatherData(city.trim());
 
   if (!weather.success) {
-    // Translate error code to message
-    const errorMessage = res.__(`weather.errors.${weather.errorCode}`, { city: city });
+    // Translate error code to message (use %s placeholder with city as argument)
+    const errorMessage = res.__(`weather.errors.${weather.errorCode}`, city);
 
     return res.render('index', {
       title: res.__('home.title'),
@@ -40,13 +40,9 @@ router.get('/weather', async function (req, res, next) {
   const temp = weather.current.temperature;
   const desc = weather.current.description;
 
-  // Dynamic titles based on language
-  const title = res.__('result.title', { city: cityName, country: countryName });
-  const description = res.__('result.description', {
-    city: cityName,
-    temp: temp,
-    condition: desc
-  });
+  // Dynamic titles based on language (use positional %s placeholders)
+  const title = res.__('result.title', cityName, countryName);
+  const description = res.__('result.description', cityName, temp, desc);
 
   res.render('result', {
     title: title,
