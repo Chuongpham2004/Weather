@@ -1,0 +1,49 @@
+# robots.txt for Weather App
+# https://weather-snowy-six.vercel.app/robots.txt
+
+# Allow all search engine crawlers
+User-agent: *
+
+# Allow crawling of all pages
+Allow: /
+
+# Block admin/api routes (if any)
+Disallow: /api/
+
+# Block language switch redirects (avoid duplicate crawling)
+Disallow: /lang/
+
+# Sitemap location
+Sitemap: https://weather-snowy-six.vercel.app/sitemap.xml
+
+# Crawl-delay (optional - be nice to the server)
+# Crawl-delay: 1
+
+# Specific rules for major search engines
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Yandex
+Allow: /
+Crawl-delay: 2
+
+# Block AI training bots (optional)
+User-agent: GPTBot
+Disallow: /
+
+User-agent: ChatGPT-User
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: anthropic-ai
+Disallow: /
+
+User-agent: Google-Extended
+Disallow: /
