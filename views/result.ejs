@@ -4,7 +4,9 @@
         <!-- Breadcrumb -->
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <div class="container">
-                <a href="/">Trang chủ</a>
+                <a href="/">
+                    <%= __('result.breadcrumb.home') %>
+                </a>
                 <span class="separator">›</span>
                 <span class="current">
                     <%= weather.current.city %>, <%= weather.current.country %>
@@ -19,8 +21,9 @@
                     <h1>
                         <%= weather.current.city %>, <%= weather.current.country %>
                     </h1>
-                    <p class="update-time">Cập nhật: <%= formatTime(weather.current.dt) %>, <%=
-                                formatDate(weather.current.dt) %>
+                    <p class="update-time">
+                        <%= __('result.updatedAt', { time: formatTime(weather.current.dt), date:
+                            formatDate(weather.current.dt) }) %>
                     </p>
                 </div>
 
@@ -39,16 +42,20 @@
                         <p class="weather-description">
                             <%= weather.current.description %>
                         </p>
-                        <p class="feels-like">Cảm giác như <strong>
-                                <%= weather.current.feelsLike %>°C
-                            </strong></p>
+                        <p class="feels-like">
+                            <%= __('result.feelsLike') %> <strong>
+                                    <%= weather.current.feelsLike %>°C
+                                </strong>
+                        </p>
                     </div>
 
                     <div class="weather-details-grid">
                         <div class="detail-item">
                             <span class="detail-icon">💧</span>
                             <div class="detail-info">
-                                <span class="detail-label">Độ ẩm</span>
+                                <span class="detail-label">
+                                    <%= __('result.details.humidity') %>
+                                </span>
                                 <span class="detail-value">
                                     <%= weather.current.humidity %>%
                                 </span>
@@ -57,17 +64,21 @@
                         <div class="detail-item">
                             <span class="detail-icon">💨</span>
                             <div class="detail-info">
-                                <span class="detail-label">Gió</span>
+                                <span class="detail-label">
+                                    <%= __('result.details.wind') %>
+                                </span>
                                 <span class="detail-value">
-                                    <%= weather.current.windSpeed %> m/s <%= getWindDirection(weather.current.windDeg)
-                                            %>
+                                    <%= weather.current.windSpeed %> m/s <%= __('windDirections.' +
+                                            getWindDirection(weather.current.windDeg)) %>
                                 </span>
                             </div>
                         </div>
                         <div class="detail-item">
                             <span class="detail-icon">👁️</span>
                             <div class="detail-info">
-                                <span class="detail-label">Tầm nhìn</span>
+                                <span class="detail-label">
+                                    <%= __('result.details.visibility') %>
+                                </span>
                                 <span class="detail-value">
                                     <%= weather.current.visibility %> km
                                 </span>
@@ -76,7 +87,9 @@
                         <div class="detail-item">
                             <span class="detail-icon">🌡️</span>
                             <div class="detail-info">
-                                <span class="detail-label">Áp suất</span>
+                                <span class="detail-label">
+                                    <%= __('result.details.pressure') %>
+                                </span>
                                 <span class="detail-value">
                                     <%= weather.current.pressure %> hPa
                                 </span>
@@ -85,7 +98,9 @@
                         <div class="detail-item">
                             <span class="detail-icon">🌅</span>
                             <div class="detail-info">
-                                <span class="detail-label">Bình minh</span>
+                                <span class="detail-label">
+                                    <%= __('result.details.sunrise') %>
+                                </span>
                                 <span class="detail-value">
                                     <%= formatTime(weather.current.sunrise) %>
                                 </span>
@@ -94,7 +109,9 @@
                         <div class="detail-item">
                             <span class="detail-icon">🌇</span>
                             <div class="detail-info">
-                                <span class="detail-label">Hoàng hôn</span>
+                                <span class="detail-label">
+                                    <%= __('result.details.sunset') %>
+                                </span>
                                 <span class="detail-value">
                                     <%= formatTime(weather.current.sunset) %>
                                 </span>
@@ -107,10 +124,12 @@
                 <form action="/weather" method="GET" class="search-form compact">
                     <div class="search-wrapper">
                         <span class="search-icon">🔍</span>
-                        <input type="text" name="city" placeholder="Tìm thành phố khác..." class="search-input" required
-                            autocomplete="off">
+                        <input type="text" name="city" placeholder="<%= __('result.searchAnother') %>"
+                            class="search-input" required autocomplete="off">
                         <button type="submit" class="search-btn">
-                            <span>Tìm</span>
+                            <span>
+                                <%= __('result.searchButton') %>
+                            </span>
                         </button>
                     </div>
                 </form>
@@ -122,7 +141,7 @@
             <div class="container">
                 <h2>
                     <span class="section-icon">⏰</span>
-                    Thời tiết theo giờ
+                    <%= __('result.hourlyForecast.title') %>
                 </h2>
 
                 <div class="hourly-scroll-container">
@@ -130,14 +149,15 @@
                         <% weather.hourly.forEach((hour, index)=> { %>
                             <article class="hourly-card<%= index === 0 ? ' current' : '' %>">
                                 <div class="hourly-time">
-                                    <%= index===0 ? 'Bây giờ' : formatTime(hour.dt) %>
+                                    <%= index===0 ? __('result.hourlyForecast.now') : formatTime(hour.dt) %>
                                 </div>
                                 <img src="<%= hour.iconUrl %>" alt="<%= hour.description %>" class="hourly-icon"
                                     width="50" height="50" loading="lazy">
                                 <div class="hourly-temp">
                                     <%= hour.temperature %>°
                                 </div>
-                                <div class="hourly-rain" title="Khả năng mưa">
+                                <div class="hourly-rain"
+                                    title="<%= currentLang === 'vi' ? 'Khả năng mưa' : 'Chance of rain' %>">
                                     <span class="rain-icon">💧</span>
                                     <span>
                                         <%= hour.pop %>%
@@ -161,7 +181,7 @@
             <div class="container">
                 <h2>
                     <span class="section-icon">📅</span>
-                    Dự báo 5 ngày tới
+                    <%= __('result.dailyForecast.title') %>
                 </h2>
 
                 <div class="daily-cards">
@@ -169,7 +189,7 @@
                         <article class="daily-card<%= index === 0 ? ' today' : '' %>">
                             <div class="daily-day">
                                 <span class="day-name">
-                                    <%= index===0 ? 'Hôm nay' : formatShortDate(day.dt) %>
+                                    <%= index===0 ? __('result.dailyForecast.today') : formatShortDate(day.dt) %>
                                 </span>
                             </div>
                             <img src="<%= day.iconUrl %>" alt="<%= day.description %>" class="daily-icon" width="50"

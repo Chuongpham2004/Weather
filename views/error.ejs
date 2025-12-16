@@ -12,12 +12,13 @@
                 </div>
                 <h1>
                     <% if (errorCode===404) { %>
-                        Không tìm thấy trang
-                        <% } else { %>
-                            Đã xảy ra lỗi
-                            <% } %>
+                        <%= __('error.404.heading') %>
+                            <% } else { %>
+                                <%= __('error.500.heading') %>
+                                    <% } %>
                 </h1>
-                <p class="error-code">Mã lỗi: <%= errorCode %>
+                <p class="error-code">
+                    <%= __('error.errorCode') %>: <%= errorCode %>
                 </p>
                 <p class="error-message">
                     <%= errorMessage %>
@@ -26,20 +27,28 @@
                 <div class="error-actions">
                     <a href="/" class="btn-primary">
                         <span>🏠</span>
-                        Về trang chủ
+                        <%= __('error.actions.home') %>
                     </a>
                     <a href="javascript:history.back()" class="btn-secondary">
                         <span>←</span>
-                        Quay lại
+                        <%= __('error.actions.back') %>
                     </a>
                 </div>
 
                 <div class="error-suggestions">
-                    <h3>Bạn có thể thử:</h3>
+                    <h3>
+                        <%= __('error.suggestions.title') %>
+                    </h3>
                     <ul>
-                        <li>Kiểm tra lại đường dẫn URL</li>
-                        <li>Tìm kiếm thành phố khác trên trang chủ</li>
-                        <li>Làm mới trang và thử lại</li>
+                        <li>
+                            <%= __('error.suggestions.checkUrl') %>
+                        </li>
+                        <li>
+                            <%= __('error.suggestions.searchOther') %>
+                        </li>
+                        <li>
+                            <%= __('error.suggestions.refresh') %>
+                        </li>
                     </ul>
                 </div>
             </div>

@@ -2,9 +2,9 @@ const axios = require('axios');
 const NodeCache = require('node-cache');
 
 // Initialize cache with TTL from environment or default 15 minutes
-const cache = new NodeCache({ 
+const cache = new NodeCache({
   stdTTL: parseInt(process.env.CACHE_TTL_SECONDS) || 900,
-  checkperiod: 120 
+  checkperiod: 120
 });
 
 const API_KEY = process.env.OPENWEATHERMAP_API_KEY;
@@ -27,14 +27,14 @@ const normalizeCityName = (city) => {
 const getCurrentWeather = async (city) => {
   const cacheKey = `current_${normalizeCityName(city)}`;
   const cached = cache.get(cacheKey);
-  
+
   if (cached) {
     console.log(`[Cache HIT] Current weather for: ${city}`);
     return cached;
   }
-  
+
   console.log(`[Cache MISS] Fetching current weather for: ${city}`);
-  
+
   try {
     const response = await axios.get(`${BASE_URL}/weather`, {
       params: {
@@ -44,7 +44,7 @@ const getCurrentWeather = async (city) => {
         lang: 'vi'
       }
     });
-    
+
     const data = {
       city: response.data.name,
       country: response.data.sys.country,
@@ -67,7 +67,7 @@ const getCurrentWeather = async (city) => {
       dt: new Date(response.data.dt * 1000),
       coord: response.data.coord
     };
-    
+
     cache.set(cacheKey, data);
     return data;
   } catch (error) {
@@ -83,14 +83,14 @@ const getCurrentWeather = async (city) => {
 const getHourlyForecast = async (city) => {
   const cacheKey = `hourly_${normalizeCityName(city)}`;
   const cached = cache.get(cacheKey);
-  
+
   if (cached) {
     console.log(`[Cache HIT] Hourly forecast for: ${city}`);
     return cached;
   }
-  
+
   console.log(`[Cache MISS] Fetching hourly forecast for: ${city}`);
-  
+
   try {
     const response = await axios.get(`${BASE_URL}/forecast`, {
       params: {
@@ -100,7 +100,7 @@ const getHourlyForecast = async (city) => {
         lang: 'vi'
       }
     });
-    
+
     // Get next 16 items (48 hours, 3-hour intervals)
     const hourlyData = response.data.list.slice(0, 16).map(item => ({
       dt: new Date(item.dt * 1000),
@@ -115,7 +115,7 @@ const getHourlyForecast = async (city) => {
       pop: Math.round((item.pop || 0) * 100), // Probability of precipitation
       clouds: item.clouds.all
     }));
-    
+
     cache.set(cacheKey, hourlyData);
     return hourlyData;
   } catch (error) {
@@ -131,14 +131,14 @@ const getHourlyForecast = async (city) => {
 const getDailyForecast = async (city) => {
   const cacheKey = `daily_${normalizeCityName(city)}`;
   const cached = cache.get(cacheKey);
-  
+
   if (cached) {
     console.log(`[Cache HIT] Daily forecast for: ${city}`);
     return cached;
   }
-  
+
   console.log(`[Cache MISS] Fetching daily forecast for: ${city}`);
-  
+
   try {
     const response = await axios.get(`${BASE_URL}/forecast`, {
       params: {
@@ -148,13 +148,13 @@ const getDailyForecast = async (city) => {
         lang: 'vi'
       }
     });
-    
+
     // Group by day and get representative data
     const dailyMap = new Map();
-    
+
     response.data.list.forEach(item => {
       const date = new Date(item.dt * 1000).toDateString();
-      
+
       if (!dailyMap.has(date)) {
         dailyMap.set(date, {
           dt: new Date(item.dt * 1000),
@@ -165,7 +165,7 @@ const getDailyForecast = async (city) => {
           pop: []
         });
       }
-      
+
       const day = dailyMap.get(date);
       day.temps.push(item.main.temp);
       day.icons.push(item.weather[0].icon);
@@ -173,7 +173,7 @@ const getDailyForecast = async (city) => {
       day.humidity.push(item.main.humidity);
       day.pop.push(item.pop || 0);
     });
-    
+
     const dailyData = Array.from(dailyMap.values()).slice(0, 5).map(day => ({
       dt: day.dt,
       tempMax: Math.round(Math.max(...day.temps)),
@@ -185,7 +185,7 @@ const getDailyForecast = async (city) => {
       humidity: Math.round(day.humidity.reduce((a, b) => a + b, 0) / day.humidity.length),
       pop: Math.round(Math.max(...day.pop) * 100)
     }));
-    
+
     cache.set(cacheKey, dailyData);
     return dailyData;
   } catch (error) {
@@ -205,7 +205,7 @@ const getWeatherData = async (city) => {
       getHourlyForecast(city),
       getDailyForecast(city)
     ]);
-    
+
     return {
       success: true,
       current,
@@ -215,38 +215,39 @@ const getWeatherData = async (city) => {
     };
   } catch (error) {
     console.error('Weather API Error:', error.response?.data || error.message);
-    
-    let errorMessage = 'Không thể lấy dữ liệu thời tiết. Vui lòng thử lại sau.';
-    
+
+    // Return error code for i18n translation in routes
+    let errorCode = 'generic';
+
     if (error.response) {
       switch (error.response.status) {
         case 404:
-          errorMessage = `Không tìm thấy thành phố "${city}". Vui lòng kiểm tra lại tên thành phố.`;
+          errorCode = 'notFound';
           break;
         case 401:
-          errorMessage = 'API key không hợp lệ. Vui lòng liên hệ quản trị viên.';
+          errorCode = 'invalidApiKey';
           break;
         case 429:
-          errorMessage = 'Đã vượt quá giới hạn request. Vui lòng thử lại sau ít phút.';
+          errorCode = 'rateLimit';
           break;
       }
     }
-    
+
     return {
       success: false,
-      error: errorMessage,
+      errorCode: errorCode,
       city
     };
   }
 };
 
 /**
- * Get wind direction text from degrees
+ * Get wind direction key from degrees (for i18n)
  * @param {number} deg 
  * @returns {string}
  */
 const getWindDirection = (deg) => {
-  const directions = ['B', 'ĐB', 'Đ', 'ĐN', 'N', 'TN', 'T', 'TB'];
+  const directions = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
   const index = Math.round(deg / 45) % 8;
   return directions[index];
 };
@@ -275,3 +276,4 @@ module.exports = {
   clearCache,
   getCacheStats
 };
+

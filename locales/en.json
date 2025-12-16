@@ -1,0 +1,175 @@
+{
+    "app": {
+        "name": "Weather App",
+        "tagline": "Accurate weather forecasts updated in real-time",
+        "copyright": "© %s Weather App. All rights reserved.",
+        "dataAttribution": "Weather data provided by"
+    },
+    "nav": {
+        "home": "Home",
+        "about": "About"
+    },
+    "home": {
+        "title": "Weather App | Accurate Weather Forecasts",
+        "description": "Look up weather in any city worldwide. Hourly and 5-day weather forecasts with data from OpenWeatherMap.",
+        "hero": {
+            "heading": "Accurate weather forecasts",
+            "subheading": "Look up weather in any city worldwide"
+        },
+        "search": {
+            "placeholder": "Enter city name (e.g., Hanoi, Tokyo, London...)",
+            "button": "Search"
+        },
+        "features": {
+            "hourly": {
+                "title": "Hourly Forecast",
+                "description": "Detailed weather updates hourly for the next 48 hours"
+            },
+            "daily": {
+                "title": "5-Day Forecast",
+                "description": "Plan ahead with accurate long-term weather forecasts"
+            },
+            "global": {
+                "title": "Global Coverage",
+                "description": "Look up weather in any city around the world"
+            }
+        },
+        "popularCities": {
+            "title": "Popular Cities"
+        }
+    },
+    "result": {
+        "title": "Weather in {city}, {country} | Hourly Forecast",
+        "description": "Weather in {city}: {temp}°C, {condition}. View detailed hourly and 5-day forecasts.",
+        "breadcrumb": {
+            "home": "Home"
+        },
+        "updatedAt": "Updated: {time}, {date}",
+        "feelsLike": "Feels like",
+        "searchAnother": "Search another city...",
+        "searchButton": "Search",
+        "details": {
+            "humidity": "Humidity",
+            "wind": "Wind",
+            "visibility": "Visibility",
+            "pressure": "Pressure",
+            "sunrise": "Sunrise",
+            "sunset": "Sunset"
+        },
+        "hourlyForecast": {
+            "title": "Hourly Weather",
+            "now": "Now"
+        },
+        "dailyForecast": {
+            "title": "5-Day Forecast",
+            "today": "Today"
+        }
+    },
+    "about": {
+        "title": "About | Weather App",
+        "description": "Weather App - Free weather lookup application with data from OpenWeatherMap API.",
+        "heading": "About Weather App",
+        "sections": {
+            "aboutUs": {
+                "title": "About Us",
+                "content1": "Weather App is a free weather lookup application that provides accurate, real-time weather forecasts for any city in the world.",
+                "content2": "The application is developed with the goal of providing the best user experience, with a simple, friendly interface that's easy to use on any device."
+            },
+            "dataSource": {
+                "title": "Data Source",
+                "content": "All weather data is provided by OpenWeatherMap - one of the world's most trusted weather data services with over 200,000 cities and high accuracy.",
+                "features": {
+                    "cities": {
+                        "title": "200,000+ Cities",
+                        "description": "Global weather data"
+                    },
+                    "updates": {
+                        "title": "Updates Every 10 Minutes",
+                        "description": "Real-time data"
+                    },
+                    "forecast": {
+                        "title": "5-Day Forecast",
+                        "description": "Plan accurately"
+                    }
+                }
+            },
+            "features": {
+                "title": "Features",
+                "list": {
+                    "search": "Search weather by city name",
+                    "current": "Current weather with detailed info (temperature, humidity, wind, pressure...)",
+                    "hourly": "Hourly weather forecast (48 hours)",
+                    "daily": "5-day weather forecast",
+                    "responsive": "Responsive interface, compatible with all devices",
+                    "fast": "Fast loading with smart caching",
+                    "vietnamese": "Vietnamese language support"
+                }
+            },
+            "developer": {
+                "title": "Developer",
+                "teamName": "Weather App Team",
+                "description": "A development team passionate about technology and wanting to bring useful products to the community.",
+                "email": "Email",
+                "website": "Website"
+            },
+            "privacy": {
+                "title": "Privacy",
+                "content": "We are committed to protecting your privacy. Weather App does not collect or store any personal information. Search queries are processed immediately and are not saved."
+            }
+        }
+    },
+    "error": {
+        "title": "Error - Weather App",
+        "404": {
+            "heading": "Page Not Found",
+            "message": "The page you're looking for doesn't exist."
+        },
+        "500": {
+            "heading": "An Error Occurred",
+            "message": "An error occurred. Please try again later."
+        },
+        "errorCode": "Error code",
+        "actions": {
+            "home": "Go to Home",
+            "back": "Go Back"
+        },
+        "suggestions": {
+            "title": "You can try:",
+            "checkUrl": "Check the URL path again",
+            "searchOther": "Search for another city on the homepage",
+            "refresh": "Refresh the page and try again"
+        }
+    },
+    "weather": {
+        "errors": {
+            "notFound": "City \"{city}\" not found. Please check the city name.",
+            "invalidApiKey": "Invalid API key. Please contact administrator.",
+            "rateLimit": "Request limit exceeded. Please try again in a few minutes.",
+            "generic": "Unable to fetch weather data. Please try again later."
+        }
+    },
+    "units": {
+        "celsius": "°C",
+        "percent": "%",
+        "kmh": "km/h",
+        "ms": "m/s",
+        "km": "km",
+        "hpa": "hPa"
+    },
+    "windDirections": {
+        "N": "N",
+        "NE": "NE",
+        "E": "E",
+        "SE": "SE",
+        "S": "S",
+        "SW": "SW",
+        "W": "W",
+        "NW": "NW"
+    },
+    "footer": {
+        "navigation": "Navigation",
+        "contact": "Contact",
+        "email": "Email",
+        "hotline": "Hotline"
+    }
+}

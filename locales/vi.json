@@ -1,0 +1,207 @@
+{
+    "app": {
+        "name": "Weather App",
+        "tagline": "Dự báo thời tiết chính xác, cập nhật theo thời gian thực",
+        "copyright": "© %s Weather App. All rights reserved.",
+        "dataAttribution": "Dữ liệu thời tiết được cung cấp bởi"
+    },
+    "nav": {
+        "home": "Trang chủ",
+        "about": "Giới thiệu"
+    },
+    "home": {
+        "title": "Weather App | Dự báo thời tiết chính xác",
+        "description": "Tra cứu thời tiết tại bất kỳ thành phố nào trên thế giới. Dự báo thời tiết theo giờ và 5 ngày với dữ liệu từ OpenWeatherMap.",
+        "hero": {
+            "heading": "Dự báo thời tiết chính xác",
+            "subheading": "Tra cứu thời tiết tại bất kỳ thành phố nào trên thế giới"
+        },
+        "search": {
+            "placeholder": "Nhập tên thành phố (VD: Hà Nội, Tokyo, London...)",
+            "button": "Tìm kiếm"
+        },
+        "features": {
+            "hourly": {
+                "title": "Dự báo theo giờ",
+                "description": "Cập nhật thời tiết chi tiết từng giờ trong 48 tiếng"
+            },
+            "daily": {
+                "title": "Dự báo 5 ngày",
+                "description": "Lên kế hoạch với dự báo thời tiết dài hạn chính xác"
+            },
+            "global": {
+                "title": "Toàn cầu",
+                "description": "Tra cứu thời tiết tại bất kỳ thành phố nào trên thế giới"
+            }
+        },
+        "popularCities": {
+            "title": "Thành phố phổ biến"
+        }
+    },
+    "result": {
+        "title": "Thời tiết {city}, {country} | Dự báo theo giờ",
+        "description": "Thời tiết {city}: {temp}°C, {condition}. Xem dự báo thời tiết theo giờ và 5 ngày tới.",
+        "breadcrumb": {
+            "home": "Trang chủ"
+        },
+        "updatedAt": "Cập nhật: {time}, {date}",
+        "feelsLike": "Cảm giác như",
+        "searchAnother": "Tìm thành phố khác...",
+        "searchButton": "Tìm",
+        "details": {
+            "humidity": "Độ ẩm",
+            "wind": "Gió",
+            "visibility": "Tầm nhìn",
+            "pressure": "Áp suất",
+            "sunrise": "Bình minh",
+            "sunset": "Hoàng hôn"
+        },
+        "hourlyForecast": {
+            "title": "Thời tiết theo giờ",
+            "now": "Bây giờ"
+        },
+        "dailyForecast": {
+            "title": "Dự báo 5 ngày tới",
+            "today": "Hôm nay"
+        }
+    },
+    "about": {
+        "title": "Giới thiệu | Weather App",
+        "description": "Weather App - Ứng dụng tra cứu thời tiết miễn phí với dữ liệu từ OpenWeatherMap API.",
+        "heading": "Giới thiệu về Weather App",
+        "sections": {
+            "aboutUs": {
+                "title": "Về chúng tôi",
+                "content1": "Weather App là ứng dụng tra cứu thời tiết miễn phí, cung cấp dự báo thời tiết chính xác và cập nhật theo thời gian thực cho bất kỳ thành phố nào trên thế giới.",
+                "content2": "Ứng dụng được phát triển với mục tiêu mang đến trải nghiệm người dùng tốt nhất, với giao diện đơn giản, thân thiện và dễ sử dụng trên mọi thiết bị."
+            },
+            "dataSource": {
+                "title": "Nguồn dữ liệu",
+                "content": "Toàn bộ dữ liệu thời tiết được cung cấp bởi OpenWeatherMap - một trong những dịch vụ dữ liệu thời tiết uy tín nhất thế giới với hơn 200,000 thành phố và độ chính xác cao.",
+                "features": {
+                    "cities": {
+                        "title": "200,000+ thành phố",
+                        "description": "Dữ liệu thời tiết toàn cầu"
+                    },
+                    "updates": {
+                        "title": "Cập nhật mỗi 10 phút",
+                        "description": "Dữ liệu thời gian thực"
+                    },
+                    "forecast": {
+                        "title": "Dự báo 5 ngày",
+                        "description": "Lên kế hoạch chính xác"
+                    }
+                }
+            },
+            "features": {
+                "title": "Tính năng",
+                "list": {
+                    "search": "Tra cứu thời tiết theo tên thành phố",
+                    "current": "Thời tiết hiện tại với thông tin chi tiết (nhiệt độ, độ ẩm, gió, áp suất...)",
+                    "hourly": "Dự báo thời tiết theo giờ (48 giờ)",
+                    "daily": "Dự báo thời tiết 5 ngày",
+                    "responsive": "Giao diện responsive, tương thích mọi thiết bị",
+                    "fast": "Tốc độ tải nhanh với caching thông minh",
+                    "vietnamese": "Hỗ trợ ngôn ngữ tiếng Việt"
+                }
+            },
+            "developer": {
+                "title": "Nhà phát triển",
+                "teamName": "Weather App Team",
+                "description": "Đội ngũ phát triển đam mê công nghệ và mong muốn mang đến những sản phẩm hữu ích cho cộng đồng.",
+                "email": "Email",
+                "website": "Website"
+            },
+            "privacy": {
+                "title": "Quyền riêng tư",
+                "content": "Chúng tôi cam kết bảo vệ quyền riêng tư của bạn. Weather App không thu thập hoặc lưu trữ bất kỳ thông tin cá nhân nào. Các truy vấn tìm kiếm được xử lý ngay lập tức và không được lưu lại."
+            }
+        }
+    },
+    "error": {
+        "title": "Lỗi - Weather App",
+        "404": {
+            "heading": "Không tìm thấy trang",
+            "message": "Trang bạn tìm kiếm không tồn tại."
+        },
+        "500": {
+            "heading": "Đã xảy ra lỗi",
+            "message": "Đã xảy ra lỗi. Vui lòng thử lại sau."
+        },
+        "errorCode": "Mã lỗi",
+        "actions": {
+            "home": "Về trang chủ",
+            "back": "Quay lại"
+        },
+        "suggestions": {
+            "title": "Bạn có thể thử:",
+            "checkUrl": "Kiểm tra lại đường dẫn URL",
+            "searchOther": "Tìm kiếm thành phố khác trên trang chủ",
+            "refresh": "Làm mới trang và thử lại"
+        }
+    },
+    "weather": {
+        "errors": {
+            "notFound": "Không tìm thấy thành phố \"{city}\". Vui lòng kiểm tra lại tên thành phố.",
+            "invalidApiKey": "API key không hợp lệ. Vui lòng liên hệ quản trị viên.",
+            "rateLimit": "Đã vượt quá giới hạn request. Vui lòng thử lại sau ít phút.",
+            "generic": "Không thể lấy dữ liệu thời tiết. Vui lòng thử lại sau."
+        }
+    },
+    "units": {
+        "celsius": "°C",
+        "percent": "%",
+        "kmh": "km/h",
+        "ms": "m/s",
+        "km": "km",
+        "hpa": "hPa"
+    },
+    "windDirections": {
+        "N": "B",
+        "NE": "ĐB",
+        "E": "Đ",
+        "SE": "ĐN",
+        "S": "N",
+        "SW": "TN",
+        "W": "T",
+        "NW": "TB"
+    },
+    "footer": {
+        "navigation": "Điều hướng",
+        "contact": "Liên hệ",
+        "email": "Email",
+        "hotline": "Hotline"
+    },
+    "weekdays": {
+        "monday": "Thứ Hai",
+        "tuesday": "Thứ Ba",
+        "wednesday": "Thứ Tư",
+        "thursday": "Thứ Năm",
+        "friday": "Thứ Sáu",
+        "saturday": "Thứ Bảy",
+        "sunday": "Chủ Nhật"
+    },
+    "weekdaysShort": {
+        "monday": "T2",
+        "tuesday": "T3",
+        "wednesday": "T4",
+        "thursday": "T5",
+        "friday": "T6",
+        "saturday": "T7",
+        "sunday": "CN"
+    },
+    "months": {
+        "january": "Tháng 1",
+        "february": "Tháng 2",
+        "march": "Tháng 3",
+        "april": "Tháng 4",
+        "may": "Tháng 5",
+        "june": "Tháng 6",
+        "july": "Tháng 7",
+        "august": "Tháng 8",
+        "september": "Tháng 9",
+        "october": "Tháng 10",
+        "november": "Tháng 11",
+        "december": "Tháng 12"
+    }
+}

@@ -5,8 +5,8 @@ const weatherService = require('../services/weatherService');
 /* GET home page */
 router.get('/', function (req, res, next) {
   res.render('index', {
-    title: 'Weather App | Dự báo thời tiết chính xác',
-    description: 'Tra cứu thời tiết tại bất kỳ thành phố nào trên thế giới. Dự báo thời tiết theo giờ và 5 ngày với dữ liệu từ OpenWeatherMap.',
+    title: res.__('home.title'),
+    description: res.__('home.description'),
     city: null,
     weather: null
   });
@@ -23,12 +23,15 @@ router.get('/weather', async function (req, res, next) {
   const weather = await weatherService.getWeatherData(city.trim());
 
   if (!weather.success) {
+    // Translate error code to message
+    const errorMessage = res.__(`weather.errors.${weather.errorCode}`, { city: city });
+
     return res.render('index', {
-      title: 'Không tìm thấy | Weather App',
-      description: 'Tra cứu thời tiết tại bất kỳ thành phố nào trên thế giới.',
+      title: res.__('home.title'),
+      description: res.__('home.description'),
       city: city,
       weather: null,
-      error: weather.error
+      error: errorMessage
     });
   }
 
@@ -37,9 +40,17 @@ router.get('/weather', async function (req, res, next) {
   const temp = weather.current.temperature;
   const desc = weather.current.description;
 
+  // Dynamic titles based on language
+  const title = res.__('result.title', { city: cityName, country: countryName });
+  const description = res.__('result.description', {
+    city: cityName,
+    temp: temp,
+    condition: desc
+  });
+
   res.render('result', {
-    title: `Thời tiết ${cityName}, ${countryName} | Dự báo theo giờ`,
-    description: `Thời tiết ${cityName}: ${temp}°C, ${desc}. Xem dự báo thời tiết theo giờ và 5 ngày tới.`,
+    title: title,
+    description: description,
     city: cityName,
     weather: weather,
     getWindDirection: weatherService.getWindDirection
@@ -49,8 +60,9 @@ router.get('/weather', async function (req, res, next) {
 /* GET about page */
 router.get('/about', function (req, res, next) {
   res.render('about', {
-    title: 'Giới thiệu | Weather App',
-    description: 'Weather App - Ứng dụng tra cứu thời tiết miễn phí với dữ liệu từ OpenWeatherMap API.'
+    title: res.__('about.title'),
+    description: res.__('about.description'),
+    weather: null
   });
 });
 
