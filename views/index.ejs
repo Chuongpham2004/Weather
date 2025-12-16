@@ -1,0 +1,85 @@
+<%- include('partials/header') %>
+
+  <main class="main-content">
+    <section class="hero-section">
+      <div class="container">
+        <div class="hero-content">
+          <h1>Dự báo thời tiết <span class="highlight">chính xác</span></h1>
+          <p class="hero-subtitle">Tra cứu thời tiết tại bất kỳ thành phố nào trên thế giới</p>
+
+          <form action="/weather" method="GET" class="search-form" id="weather-search">
+            <div class="search-wrapper">
+              <span class="search-icon">🔍</span>
+              <input type="text" name="city" placeholder="Nhập tên thành phố (VD: Hà Nội, Tokyo, London...)"
+                class="search-input" value="<%= city || '' %>" required autocomplete="off" aria-label="Tên thành phố">
+              <button type="submit" class="search-btn">
+                <span>Tìm kiếm</span>
+                <span class="btn-arrow">→</span>
+              </button>
+            </div>
+          </form>
+
+          <% if (typeof error !=='undefined' && error) { %>
+            <div class="error-message" role="alert">
+              <span class="error-icon">⚠️</span>
+              <p>
+                <%= error %>
+              </p>
+            </div>
+            <% } %>
+        </div>
+
+        <div class="hero-features">
+          <div class="feature-card">
+            <span class="feature-icon">⏰</span>
+            <h3>Dự báo theo giờ</h3>
+            <p>Cập nhật thời tiết chi tiết từng giờ trong 48 tiếng</p>
+          </div>
+          <div class="feature-card">
+            <span class="feature-icon">📅</span>
+            <h3>Dự báo 5 ngày</h3>
+            <p>Lên kế hoạch với dự báo thời tiết dài hạn chính xác</p>
+          </div>
+          <div class="feature-card">
+            <span class="feature-icon">🌍</span>
+            <h3>Toàn cầu</h3>
+            <p>Tra cứu thời tiết tại bất kỳ thành phố nào trên thế giới</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="popular-cities">
+      <div class="container">
+        <h2>Thành phố phổ biến</h2>
+        <div class="cities-grid">
+          <a href="/weather?city=Hà Nội" class="city-card">
+            <span class="city-icon">🏛️</span>
+            <span class="city-name">Hà Nội</span>
+          </a>
+          <a href="/weather?city=Hồ Chí Minh" class="city-card">
+            <span class="city-icon">🌆</span>
+            <span class="city-name">Hồ Chí Minh</span>
+          </a>
+          <a href="/weather?city=Đà Nẵng" class="city-card">
+            <span class="city-icon">🏖️</span>
+            <span class="city-name">Đà Nẵng</span>
+          </a>
+          <a href="/weather?city=Tokyo" class="city-card">
+            <span class="city-icon">🗼</span>
+            <span class="city-name">Tokyo</span>
+          </a>
+          <a href="/weather?city=Singapore" class="city-card">
+            <span class="city-icon">🏙️</span>
+            <span class="city-name">Singapore</span>
+          </a>
+          <a href="/weather?city=London" class="city-card">
+            <span class="city-icon">🎡</span>
+            <span class="city-name">London</span>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <%- include('partials/footer') %>

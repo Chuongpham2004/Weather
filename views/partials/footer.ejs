@@ -1,0 +1,87 @@
+<footer class="site-footer">
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <span class="logo-icon">🌤️</span>
+                <span class="footer-title">Weather App</span>
+                <p class="footer-tagline">Dự báo thời tiết chính xác, cập nhật theo thời gian thực</p>
+            </div>
+
+            <div class="footer-links">
+                <div class="footer-section">
+                    <h4>Điều hướng</h4>
+                    <a href="/">Trang chủ</a>
+                    <a href="/about">Giới thiệu</a>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Liên hệ</h4>
+                    <p>Email: contact@weatherapp.com</p>
+                    <p>Hotline: 1900-xxxx</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p class="copyright">© <%= currentYear %> Weather App. All rights reserved.</p>
+            <p class="data-attribution">
+                <span>Dữ liệu thời tiết được cung cấp bởi</span>
+                <a href="https://openweathermap.org" target="_blank" rel="noopener noreferrer">
+                    OpenWeatherMap
+                </a>
+            </p>
+        </div>
+    </div>
+</footer>
+
+<% if (typeof weather !=='undefined' && weather && weather.success) { %>
+    <!-- JSON-LD Schema Markup for SEO -->
+    <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "<%= title %>",
+    "description": "<%= description %>",
+    "url": "<%= 'https://weatherapp.com/weather?city=' + encodeURIComponent(weather.current.city) %>",
+    "dateModified": "<%= weather.fetchedAt.toISOString() %>",
+    "mainEntity": {
+      "@type": "Place",
+      "name": "<%= weather.current.city %>, <%= weather.current.country %>",
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": <%= weather.current.coord.lat %>,
+        "longitude": <%= weather.current.coord.lon %>
+      }
+    },
+    "about": {
+      "@type": "Thing",
+      "name": "Weather Forecast",
+      "description": "Dự báo thời tiết tại <%= weather.current.city %>: <%= weather.current.temperature %>°C, <%= weather.current.description %>"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Weather App",
+      "url": "https://weatherapp.com"
+    }
+  }
+  </script>
+    <% } else { %>
+        <!-- JSON-LD Schema for Homepage -->
+        <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Weather App",
+    "description": "Tra cứu thời tiết tại bất kỳ thành phố nào trên thế giới. Dự báo thời tiết theo giờ và 5 ngày với dữ liệu từ OpenWeatherMap.",
+    "url": "https://weatherapp.com",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://weatherapp.com/weather?city={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  }
+  </script>
+        <% } %>
+            </body>
+
+            </html>

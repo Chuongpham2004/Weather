@@ -1,0 +1,49 @@
+<%- include('partials/header') %>
+
+    <main class="main-content error-page">
+        <div class="container">
+            <div class="error-content">
+                <div class="error-icon">
+                    <% if (errorCode===404) { %>
+                        🔍
+                        <% } else { %>
+                            ⚠️
+                            <% } %>
+                </div>
+                <h1>
+                    <% if (errorCode===404) { %>
+                        Không tìm thấy trang
+                        <% } else { %>
+                            Đã xảy ra lỗi
+                            <% } %>
+                </h1>
+                <p class="error-code">Mã lỗi: <%= errorCode %>
+                </p>
+                <p class="error-message">
+                    <%= errorMessage %>
+                </p>
+
+                <div class="error-actions">
+                    <a href="/" class="btn-primary">
+                        <span>🏠</span>
+                        Về trang chủ
+                    </a>
+                    <a href="javascript:history.back()" class="btn-secondary">
+                        <span>←</span>
+                        Quay lại
+                    </a>
+                </div>
+
+                <div class="error-suggestions">
+                    <h3>Bạn có thể thử:</h3>
+                    <ul>
+                        <li>Kiểm tra lại đường dẫn URL</li>
+                        <li>Tìm kiếm thành phố khác trên trang chủ</li>
+                        <li>Làm mới trang và thử lại</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <%- include('partials/footer') %>

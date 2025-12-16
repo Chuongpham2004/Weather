@@ -1,0 +1,206 @@
+<%- include('partials/header') %>
+
+    <main class="main-content weather-result">
+        <!-- Breadcrumb -->
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <div class="container">
+                <a href="/">Trang chủ</a>
+                <span class="separator">›</span>
+                <span class="current">
+                    <%= weather.current.city %>, <%= weather.current.country %>
+                </span>
+            </div>
+        </nav>
+
+        <!-- Current Weather Hero -->
+        <section class="current-weather-section">
+            <div class="container">
+                <div class="location-header">
+                    <h1>
+                        <%= weather.current.city %>, <%= weather.current.country %>
+                    </h1>
+                    <p class="update-time">Cập nhật: <%= formatTime(weather.current.dt) %>, <%=
+                                formatDate(weather.current.dt) %>
+                    </p>
+                </div>
+
+                <div class="current-weather-card">
+                    <div class="weather-main">
+                        <div class="temperature-display">
+                            <img src="<%= weather.current.iconUrl %>" alt="<%= weather.current.description %>"
+                                class="weather-icon-large" width="120" height="120" loading="eager">
+                            <div class="temp-value">
+                                <span class="temp-number">
+                                    <%= weather.current.temperature %>
+                                </span>
+                                <span class="temp-unit">°C</span>
+                            </div>
+                        </div>
+                        <p class="weather-description">
+                            <%= weather.current.description %>
+                        </p>
+                        <p class="feels-like">Cảm giác như <strong>
+                                <%= weather.current.feelsLike %>°C
+                            </strong></p>
+                    </div>
+
+                    <div class="weather-details-grid">
+                        <div class="detail-item">
+                            <span class="detail-icon">💧</span>
+                            <div class="detail-info">
+                                <span class="detail-label">Độ ẩm</span>
+                                <span class="detail-value">
+                                    <%= weather.current.humidity %>%
+                                </span>
+                            </div>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-icon">💨</span>
+                            <div class="detail-info">
+                                <span class="detail-label">Gió</span>
+                                <span class="detail-value">
+                                    <%= weather.current.windSpeed %> m/s <%= getWindDirection(weather.current.windDeg)
+                                            %>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-icon">👁️</span>
+                            <div class="detail-info">
+                                <span class="detail-label">Tầm nhìn</span>
+                                <span class="detail-value">
+                                    <%= weather.current.visibility %> km
+                                </span>
+                            </div>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-icon">🌡️</span>
+                            <div class="detail-info">
+                                <span class="detail-label">Áp suất</span>
+                                <span class="detail-value">
+                                    <%= weather.current.pressure %> hPa
+                                </span>
+                            </div>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-icon">🌅</span>
+                            <div class="detail-info">
+                                <span class="detail-label">Bình minh</span>
+                                <span class="detail-value">
+                                    <%= formatTime(weather.current.sunrise) %>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-icon">🌇</span>
+                            <div class="detail-info">
+                                <span class="detail-label">Hoàng hôn</span>
+                                <span class="detail-value">
+                                    <%= formatTime(weather.current.sunset) %>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Search Again -->
+                <form action="/weather" method="GET" class="search-form compact">
+                    <div class="search-wrapper">
+                        <span class="search-icon">🔍</span>
+                        <input type="text" name="city" placeholder="Tìm thành phố khác..." class="search-input" required
+                            autocomplete="off">
+                        <button type="submit" class="search-btn">
+                            <span>Tìm</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- Hourly Forecast -->
+        <section class="hourly-forecast-section">
+            <div class="container">
+                <h2>
+                    <span class="section-icon">⏰</span>
+                    Thời tiết theo giờ
+                </h2>
+
+                <div class="hourly-scroll-container">
+                    <div class="hourly-cards">
+                        <% weather.hourly.forEach((hour, index)=> { %>
+                            <article class="hourly-card<%= index === 0 ? ' current' : '' %>">
+                                <div class="hourly-time">
+                                    <%= index===0 ? 'Bây giờ' : formatTime(hour.dt) %>
+                                </div>
+                                <img src="<%= hour.iconUrl %>" alt="<%= hour.description %>" class="hourly-icon"
+                                    width="50" height="50" loading="lazy">
+                                <div class="hourly-temp">
+                                    <%= hour.temperature %>°
+                                </div>
+                                <div class="hourly-rain" title="Khả năng mưa">
+                                    <span class="rain-icon">💧</span>
+                                    <span>
+                                        <%= hour.pop %>%
+                                    </span>
+                                </div>
+                                <div class="hourly-wind">
+                                    <span class="wind-icon">💨</span>
+                                    <span>
+                                        <%= Math.round(hour.windSpeed) %> m/s
+                                    </span>
+                                </div>
+                            </article>
+                            <% }); %>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5-Day Forecast -->
+        <section class="daily-forecast-section">
+            <div class="container">
+                <h2>
+                    <span class="section-icon">📅</span>
+                    Dự báo 5 ngày tới
+                </h2>
+
+                <div class="daily-cards">
+                    <% weather.daily.forEach((day, index)=> { %>
+                        <article class="daily-card<%= index === 0 ? ' today' : '' %>">
+                            <div class="daily-day">
+                                <span class="day-name">
+                                    <%= index===0 ? 'Hôm nay' : formatShortDate(day.dt) %>
+                                </span>
+                            </div>
+                            <img src="<%= day.iconUrl %>" alt="<%= day.description %>" class="daily-icon" width="50"
+                                height="50" loading="lazy">
+                            <div class="daily-desc">
+                                <%= day.description %>
+                            </div>
+                            <div class="daily-temps">
+                                <span class="temp-high">
+                                    <%= day.tempMax %>°
+                                </span>
+                                <div class="temp-bar">
+                                    <div class="temp-range"
+                                        style="--min: <%= (day.tempMin + 10) / 50 * 100 %>%; --max: <%= (day.tempMax + 10) / 50 * 100 %>%;">
+                                    </div>
+                                </div>
+                                <span class="temp-low">
+                                    <%= day.tempMin %>°
+                                </span>
+                            </div>
+                            <div class="daily-rain">
+                                <span class="rain-icon">💧</span>
+                                <span>
+                                    <%= day.pop %>%
+                                </span>
+                            </div>
+                        </article>
+                        <% }); %>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <%- include('partials/footer') %>
