@@ -1,54 +1,65 @@
-<footer class="site-footer">
-  <div class="container">
-    <div class="footer-content">
-      <div class="footer-brand">
-        <span class="logo-icon">🌤️</span>
-        <span class="footer-title">
-          <%= __('app.name') %>
-        </span>
-        <p class="footer-tagline">
+<!-- Footer -->
+<footer class="bg-black/20 border-t border-white/10 mt-auto">
+  <div class="container mx-auto px-4 py-8 md:py-12">
+    <!-- Footer Content -->
+    <div class="flex flex-col md:flex-row justify-between gap-8 mb-8">
+      <!-- Brand -->
+      <div class="text-center md:text-left">
+        <div class="flex items-center justify-center md:justify-start gap-2 mb-2">
+          <span class="text-2xl">🌤️</span>
+          <span class="font-bold text-lg">
+            <%= __('app.name') %>
+          </span>
+        </div>
+        <p class="text-white/50 text-sm max-w-xs mx-auto md:mx-0">
           <%= __('app.tagline') %>
         </p>
       </div>
 
-      <div class="footer-links">
-        <div class="footer-section">
-          <h4>
+      <!-- Links -->
+      <div class="flex flex-col sm:flex-row gap-8 text-center md:text-left">
+        <div>
+          <h4 class="font-semibold mb-3 text-white/80">
             <%= __('footer.navigation') %>
           </h4>
-          <a href="/">
-            <%= __('nav.home') %>
-          </a>
-          <a href="/about">
-            <%= __('nav.about') %>
-          </a>
+          <div class="flex flex-col gap-2">
+            <a href="/" class="text-white/50 hover:text-accent-cyan transition-colors text-sm">
+              <%= __('nav.home') %>
+            </a>
+            <a href="/about" class="text-white/50 hover:text-accent-cyan transition-colors text-sm">
+              <%= __('nav.about') %>
+            </a>
+          </div>
         </div>
 
-        <div class="footer-section">
-          <h4>
+        <div>
+          <h4 class="font-semibold mb-3 text-white/80">
             <%= __('footer.contact') %>
           </h4>
-          <p>
-            <%= __('footer.email') %>: contact@weatherapp.com
-          </p>
-          <p>
-            <%= __('footer.hotline') %>: 1900-xxxx
-          </p>
+          <div class="flex flex-col gap-2 text-white/50 text-sm">
+            <p>
+              <%= __('footer.email') %>: contact@weatherapp.com
+            </p>
+            <p>
+              <%= __('footer.hotline') %>: 1900-xxxx
+            </p>
+          </div>
         </div>
       </div>
     </div>
 
-    <div class="footer-bottom">
-      <p class="copyright">
+    <!-- Footer Bottom -->
+    <div
+      class="flex flex-col sm:flex-row justify-between items-center gap-4 pt-6 border-t border-white/10 text-xs text-white/40">
+      <p>
         <%= __('app.copyright', currentYear) %>
       </p>
-      <p class="data-attribution">
-        <span>
-          <%= __('app.dataAttribution') %>
-        </span>
-        <a href="https://openweathermap.org" target="_blank" rel="noopener noreferrer">
-          OpenWeatherMap
-        </a>
+      <p>
+        <%= __('app.dataAttribution') %>
+          <a href="https://openweathermap.org" target="_blank" rel="noopener noreferrer"
+            class="text-accent-cyan font-medium hover:underline">
+            OpenWeatherMap
+          </a>
       </p>
     </div>
   </div>
@@ -73,11 +84,6 @@
         "latitude": <%= weather.current.coord.lat %>,
         "longitude": <%= weather.current.coord.lon %>
       }
-    },
-    "about": {
-      "@type": "Thing",
-      "name": "Weather Forecast",
-      "description": "<%= currentLang === 'vi' ? 'Dự báo thời tiết tại' : 'Weather forecast for' %> <%= weather.current.city %>: <%= weather.current.temperature %>°C, <%= weather.current.description %>"
     },
     "publisher": {
       "@type": "Organization",

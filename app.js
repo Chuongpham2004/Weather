@@ -10,15 +10,17 @@ var indexRouter = require('./routes/index');
 
 var app = express();
 
+// Supported languages
+const SUPPORTED_LOCALES = ['vi', 'en'];
+const DEFAULT_LOCALE = 'vi';
+
 // i18n configuration
 i18n.configure({
-  locales: ['vi', 'en'],
-  defaultLocale: 'vi',
+  locales: SUPPORTED_LOCALES,
+  defaultLocale: DEFAULT_LOCALE,
   directory: path.join(__dirname, 'locales'),
   objectNotation: true,
   updateFiles: false,
-  cookie: 'lang',
-  queryParameter: 'lang',
   autoReload: true,
   syncFiles: false
 });
@@ -41,21 +43,58 @@ app.use(express.static(path.join(__dirname, 'public'), {
   etag: true
 }));
 
+// Language detection middleware from URL
+app.use((req, res, next) => {
+  // Extract language from URL path (e.g., /vi/weather or /en/about)
+  const pathParts = req.path.split('/').filter(Boolean);
+  const firstPart = pathParts[0];
+
+  if (SUPPORTED_LOCALES.includes(firstPart)) {
+    // Set locale from URL
+    req.setLocale(firstPart);
+    res.locals.currentLang = firstPart;
+    // Store the original path without language prefix
+    res.locals.pathWithoutLang = '/' + pathParts.slice(1).join('/') || '/';
+  } else {
+    // No language in URL - redirect to default locale
+    const targetLang = req.cookies.lang || DEFAULT_LOCALE;
+    if (req.path !== '/favicon.ico' && !req.path.startsWith('/stylesheets') && !req.path.startsWith('/images')) {
+      return res.redirect(301, `/${targetLang}${req.originalUrl}`);
+    }
+    req.setLocale(DEFAULT_LOCALE);
+    res.locals.currentLang = DEFAULT_LOCALE;
+    res.locals.pathWithoutLang = req.path;
+  }
+
+  next();
+});
+
 // Make common helpers available to all views
 app.use((req, res, next) => {
   // Current year
   res.locals.currentYear = new Date().getFullYear();
 
-  // Current language
-  res.locals.currentLang = req.getLocale();
-  res.locals.languages = [
-    { code: 'vi', name: 'Tiếng Việt', flag: '🇻🇳' },
-    { code: 'en', name: 'English', flag: '🇬🇧' }
-  ];
+  // Languages for switcher
+  res.locals.languages = SUPPORTED_LOCALES.map(code => ({
+    code,
+    name: code === 'vi' ? 'Tiếng Việt' : 'English',
+    flag: code === 'vi' ? '🇻🇳' : '🇬🇧'
+  }));
 
   // Translation function for views
   res.locals.__ = res.__;
   res.locals.t = res.__;
+
+  // Base URL for canonical links
+  res.locals.baseUrl = process.env.BASE_URL || 'https://weatherapp.com';
+
+  // Current path without language for hreflang (e.g., /weather?city=Hanoi)
+  const pathWithoutLang = res.locals.pathWithoutLang || '/';
+  const queryString = req.originalUrl.includes('?') ? req.originalUrl.split('?')[1] : '';
+  res.locals.pathWithoutLang = pathWithoutLang + (queryString ? '?' + queryString : '');
+
+  // Full current path with language
+  res.locals.currentPath = `/${res.locals.currentLang}${res.locals.pathWithoutLang}`;
 
   // Date formatting based on locale
   const locale = req.getLocale();
@@ -88,19 +127,14 @@ app.use((req, res, next) => {
   next();
 });
 
-// Language switch route
-app.get('/lang/:locale', (req, res) => {
-  const locale = req.params.locale;
-  if (['vi', 'en'].includes(locale)) {
-    res.cookie('lang', locale, { maxAge: 365 * 24 * 60 * 60 * 1000 }); // 1 year
-    req.setLocale(locale);
-  }
-  // Redirect back to previous page or home
-  const referer = req.get('Referer') || '/';
-  res.redirect(referer);
-});
+// Routes with language prefix
+app.use('/:lang(vi|en)', indexRouter);
 
-app.use('/', indexRouter);
+// Root redirect to default language
+app.get('/', (req, res) => {
+  const targetLang = req.cookies.lang || DEFAULT_LOCALE;
+  res.redirect(301, `/${targetLang}/`);
+});
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

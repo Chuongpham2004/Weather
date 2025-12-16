@@ -1,53 +1,79 @@
 <%- include('partials/header') %>
 
-    <main class="main-content error-page">
-        <div class="container">
-            <div class="error-content">
-                <div class="error-icon">
+    <!-- Main Content -->
+    <main class="flex-1 flex items-center justify-center py-12 md:py-20">
+        <div class="container mx-auto px-4">
+            <div class="glass-card max-w-lg mx-auto p-8 md:p-12 text-center">
+                <!-- Error Icon -->
+                <div class="text-6xl md:text-7xl mb-6">
                     <% if (errorCode===404) { %>
                         🔍
                         <% } else { %>
                             ⚠️
                             <% } %>
                 </div>
-                <h1>
+
+                <!-- Error Heading -->
+                <h1 class="text-2xl md:text-3xl font-bold mb-2">
                     <% if (errorCode===404) { %>
                         <%= __('error.404.heading') %>
                             <% } else { %>
                                 <%= __('error.500.heading') %>
                                     <% } %>
                 </h1>
-                <p class="error-code">
-                    <%= __('error.errorCode') %>: <%= errorCode %>
+
+                <!-- Error Code -->
+                <p class="text-white/50 mb-4">
+                    <%= __('error.errorCode') %>: <span class="font-mono font-bold text-white">
+                            <%= errorCode %>
+                        </span>
                 </p>
-                <p class="error-message">
+
+                <!-- Error Message -->
+                <p class="text-white/70 mb-8">
                     <%= errorMessage %>
                 </p>
 
-                <div class="error-actions">
-                    <a href="/" class="btn-primary">
+                <!-- Action Buttons -->
+                <div class="flex flex-col sm:flex-row justify-center gap-3 mb-8">
+                    <a href="/" class="btn-primary flex items-center justify-center gap-2">
                         <span>🏠</span>
-                        <%= __('error.actions.home') %>
+                        <span>
+                            <%= __('error.actions.home') %>
+                        </span>
                     </a>
-                    <a href="javascript:history.back()" class="btn-secondary">
+                    <a href="javascript:history.back()"
+                        class="glass-card hover:bg-white/10 px-6 py-3 rounded-xl font-semibold transition-colors flex items-center justify-center gap-2">
                         <span>←</span>
-                        <%= __('error.actions.back') %>
+                        <span>
+                            <%= __('error.actions.back') %>
+                        </span>
                     </a>
                 </div>
 
-                <div class="error-suggestions">
-                    <h3>
+                <!-- Suggestions -->
+                <div class="text-left glass-card p-4 md:p-6">
+                    <h3 class="font-semibold mb-3 text-white/80">
                         <%= __('error.suggestions.title') %>
                     </h3>
-                    <ul>
-                        <li>
-                            <%= __('error.suggestions.checkUrl') %>
+                    <ul class="space-y-2 text-sm text-white/60">
+                        <li class="flex items-start gap-2">
+                            <span>•</span>
+                            <span>
+                                <%= __('error.suggestions.checkUrl') %>
+                            </span>
                         </li>
-                        <li>
-                            <%= __('error.suggestions.searchOther') %>
+                        <li class="flex items-start gap-2">
+                            <span>•</span>
+                            <span>
+                                <%= __('error.suggestions.searchOther') %>
+                            </span>
                         </li>
-                        <li>
-                            <%= __('error.suggestions.refresh') %>
+                        <li class="flex items-start gap-2">
+                            <span>•</span>
+                            <span>
+                                <%= __('error.suggestions.refresh') %>
+                            </span>
                         </li>
                     </ul>
                 </div>

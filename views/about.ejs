@@ -1,63 +1,70 @@
 <%- include('partials/header') %>
 
-    <main class="main-content about-page">
-        <div class="container">
-            <article class="about-content">
-                <h1>
+    <!-- Main Content -->
+    <main class="flex-1 py-8 md:py-12">
+        <div class="container mx-auto px-4">
+            <article class="max-w-3xl mx-auto">
+                <h1 class="text-2xl md:text-3xl font-bold text-center mb-8 md:mb-12">
                     <%= __('about.heading') %>
                 </h1>
 
-                <section class="about-section">
-                    <h2>🌤️ <%= __('about.sections.aboutUs.title') %>
+                <!-- About Us -->
+                <section class="glass-card p-6 md:p-8 mb-6">
+                    <h2 class="flex items-center gap-2 text-lg md:text-xl font-semibold text-primary mb-4">
+                        🌤️ <%= __('about.sections.aboutUs.title') %>
                     </h2>
-                    <p>
+                    <p class="text-white/70 mb-3 leading-relaxed">
                         <%= __('about.sections.aboutUs.content1') %>
                     </p>
-                    <p>
+                    <p class="text-white/70 leading-relaxed">
                         <%= __('about.sections.aboutUs.content2') %>
                     </p>
                 </section>
 
-                <section class="about-section">
-                    <h2>📊 <%= __('about.sections.dataSource.title') %>
+                <!-- Data Source -->
+                <section class="glass-card p-6 md:p-8 mb-6">
+                    <h2 class="flex items-center gap-2 text-lg md:text-xl font-semibold text-primary mb-4">
+                        📊 <%= __('about.sections.dataSource.title') %>
                     </h2>
-                    <p>
+                    <p class="text-white/70 mb-6 leading-relaxed">
                         <%= __('about.sections.dataSource.content').split('OpenWeatherMap')[0] %>
-                            <a href="https://openweathermap.org" target="_blank" rel="noopener noreferrer">
-                                <strong>OpenWeatherMap</strong>
+                            <a href="https://openweathermap.org" target="_blank" rel="noopener noreferrer"
+                                class="text-accent-cyan font-semibold hover:underline">
+                                OpenWeatherMap
                             </a>
                             <%= __('about.sections.dataSource.content').split('OpenWeatherMap')[1] || '' %>
                     </p>
-                    <div class="data-features">
-                        <div class="data-feature">
-                            <span class="feature-icon">🌍</span>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <div class="glass-card p-4 flex items-start gap-3">
+                            <span class="text-2xl md:text-3xl">🌍</span>
                             <div>
-                                <strong>
+                                <p class="font-semibold text-sm md:text-base">
                                     <%= __('about.sections.dataSource.features.cities.title') %>
-                                </strong>
-                                <p>
+                                </p>
+                                <p class="text-white/50 text-xs md:text-sm">
                                     <%= __('about.sections.dataSource.features.cities.description') %>
                                 </p>
                             </div>
                         </div>
-                        <div class="data-feature">
-                            <span class="feature-icon">⏱️</span>
+                        <div class="glass-card p-4 flex items-start gap-3">
+                            <span class="text-2xl md:text-3xl">⏱️</span>
                             <div>
-                                <strong>
+                                <p class="font-semibold text-sm md:text-base">
                                     <%= __('about.sections.dataSource.features.updates.title') %>
-                                </strong>
-                                <p>
+                                </p>
+                                <p class="text-white/50 text-xs md:text-sm">
                                     <%= __('about.sections.dataSource.features.updates.description') %>
                                 </p>
                             </div>
                         </div>
-                        <div class="data-feature">
-                            <span class="feature-icon">📅</span>
+                        <div class="glass-card p-4 flex items-start gap-3">
+                            <span class="text-2xl md:text-3xl">📅</span>
                             <div>
-                                <strong>
+                                <p class="font-semibold text-sm md:text-base">
                                     <%= __('about.sections.dataSource.features.forecast.title') %>
-                                </strong>
-                                <p>
+                                </p>
+                                <p class="text-white/50 text-xs md:text-sm">
                                     <%= __('about.sections.dataSource.features.forecast.description') %>
                                 </p>
                             </div>
@@ -65,52 +72,88 @@
                     </div>
                 </section>
 
-                <section class="about-section">
-                    <h2>✨ <%= __('about.sections.features.title') %>
+                <!-- Features -->
+                <section class="glass-card p-6 md:p-8 mb-6">
+                    <h2 class="flex items-center gap-2 text-lg md:text-xl font-semibold text-primary mb-4">
+                        ✨ <%= __('about.sections.features.title') %>
                     </h2>
-                    <ul class="feature-list">
-                        <li>✅ <%= __('about.sections.features.list.search') %>
+                    <ul class="space-y-2 text-white/70">
+                        <li class="flex items-start gap-2">
+                            <span class="text-green-400">✅</span>
+                            <span>
+                                <%= __('about.sections.features.list.search') %>
+                            </span>
                         </li>
-                        <li>✅ <%= __('about.sections.features.list.current') %>
+                        <li class="flex items-start gap-2">
+                            <span class="text-green-400">✅</span>
+                            <span>
+                                <%= __('about.sections.features.list.current') %>
+                            </span>
                         </li>
-                        <li>✅ <%= __('about.sections.features.list.hourly') %>
+                        <li class="flex items-start gap-2">
+                            <span class="text-green-400">✅</span>
+                            <span>
+                                <%= __('about.sections.features.list.hourly') %>
+                            </span>
                         </li>
-                        <li>✅ <%= __('about.sections.features.list.daily') %>
+                        <li class="flex items-start gap-2">
+                            <span class="text-green-400">✅</span>
+                            <span>
+                                <%= __('about.sections.features.list.daily') %>
+                            </span>
                         </li>
-                        <li>✅ <%= __('about.sections.features.list.responsive') %>
+                        <li class="flex items-start gap-2">
+                            <span class="text-green-400">✅</span>
+                            <span>
+                                <%= __('about.sections.features.list.responsive') %>
+                            </span>
                         </li>
-                        <li>✅ <%= __('about.sections.features.list.fast') %>
+                        <li class="flex items-start gap-2">
+                            <span class="text-green-400">✅</span>
+                            <span>
+                                <%= __('about.sections.features.list.fast') %>
+                            </span>
                         </li>
-                        <li>✅ <%= __('about.sections.features.list.vietnamese') %>
+                        <li class="flex items-start gap-2">
+                            <span class="text-green-400">✅</span>
+                            <span>
+                                <%= __('about.sections.features.list.vietnamese') %>
+                            </span>
                         </li>
                     </ul>
                 </section>
 
-                <section class="about-section">
-                    <h2>👨‍💻 <%= __('about.sections.developer.title') %>
+                <!-- Developer -->
+                <section class="glass-card p-6 md:p-8 mb-6">
+                    <h2 class="flex items-center gap-2 text-lg md:text-xl font-semibold text-primary mb-4">
+                        👨‍💻 <%= __('about.sections.developer.title') %>
                     </h2>
-                    <div class="developer-card">
-                        <div class="developer-avatar">👨‍💻</div>
-                        <div class="developer-info">
-                            <h3>
+                    <div class="flex flex-col sm:flex-row items-center sm:items-start gap-6 glass-card p-6">
+                        <span class="text-5xl md:text-6xl">👨‍💻</span>
+                        <div class="text-center sm:text-left">
+                            <h3 class="font-semibold text-lg mb-2">
                                 <%= __('about.sections.developer.teamName') %>
                             </h3>
-                            <p>
+                            <p class="text-white/70 mb-4">
                                 <%= __('about.sections.developer.description') %>
                             </p>
-                            <div class="contact-info">
+                            <div class="space-y-1 text-sm text-white/60">
                                 <p>📧 <%= __('about.sections.developer.email') %>: <a
-                                            href="mailto:contact@weatherapp.com">contact@weatherapp.com</a></p>
-                                <p>🌐 <%= __('about.sections.developer.website') %>: <a href="/">weatherapp.com</a></p>
+                                            href="mailto:contact@weatherapp.com"
+                                            class="text-accent-cyan hover:underline">contact@weatherapp.com</a></p>
+                                <p>🌐 <%= __('about.sections.developer.website') %>: <a href="/"
+                                            class="text-accent-cyan hover:underline">weatherapp.com</a></p>
                             </div>
                         </div>
                     </div>
                 </section>
 
-                <section class="about-section">
-                    <h2>🔒 <%= __('about.sections.privacy.title') %>
+                <!-- Privacy -->
+                <section class="glass-card p-6 md:p-8">
+                    <h2 class="flex items-center gap-2 text-lg md:text-xl font-semibold text-primary mb-4">
+                        🔒 <%= __('about.sections.privacy.title') %>
                     </h2>
-                    <p>
+                    <p class="text-white/70 leading-relaxed">
                         <%= __('about.sections.privacy.content') %>
                     </p>
                 </section>

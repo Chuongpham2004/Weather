@@ -1,135 +1,143 @@
 <%- include('partials/header') %>
 
-    <main class="main-content weather-result">
+    <!-- Main Content -->
+    <main class="flex-1">
         <!-- Breadcrumb -->
-        <nav class="breadcrumb" aria-label="Breadcrumb">
-            <div class="container">
-                <a href="/">
-                    <%= __('result.breadcrumb.home') %>
-                </a>
-                <span class="separator">›</span>
-                <span class="current">
-                    <%= weather.current.city %>, <%= weather.current.country %>
-                </span>
+        <nav class="border-b border-white/10" aria-label="Breadcrumb">
+            <div class="container mx-auto px-4 py-3">
+                <div class="flex items-center gap-2 text-sm text-white/50">
+                    <a href="/" class="hover:text-white transition-colors">
+                        <%= __('result.breadcrumb.home') %>
+                    </a>
+                    <span>›</span>
+                    <span class="text-white">
+                        <%= weather.current.city %>, <%= weather.current.country %>
+                    </span>
+                </div>
             </div>
         </nav>
 
-        <!-- Current Weather Hero -->
-        <section class="current-weather-section">
-            <div class="container">
-                <div class="location-header">
-                    <h1>
+        <!-- Current Weather Section -->
+        <section class="py-6 md:py-10">
+            <div class="container mx-auto px-4">
+                <!-- Location Header -->
+                <div class="text-center mb-6 md:mb-8">
+                    <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-2">
                         <%= weather.current.city %>, <%= weather.current.country %>
                     </h1>
-                    <p class="update-time">
-                        <%= __('result.updatedAt', { time: formatTime(weather.current.dt), date:
-                            formatDate(weather.current.dt) }) %>
+                    <p class="text-white/60 text-sm md:text-base">
+                        <%= __('result.updatedAt', formatTime(weather.current.dt), formatDate(weather.current.dt)) %>
                     </p>
                 </div>
 
-                <div class="current-weather-card">
-                    <div class="weather-main">
-                        <div class="temperature-display">
+                <!-- Current Weather Card -->
+                <div
+                    class="glass-card p-6 md:p-8 bg-gradient-to-br from-accent-blue/30 to-primary/20 max-w-3xl mx-auto">
+                    <!-- Main Weather Display -->
+                    <div class="text-center mb-6 md:mb-8">
+                        <div class="flex items-center justify-center gap-4 md:gap-6">
                             <img src="<%= weather.current.iconUrl %>" alt="<%= weather.current.description %>"
-                                class="weather-icon-large" width="120" height="120" loading="eager">
-                            <div class="temp-value">
-                                <span class="temp-number">
+                                class="w-20 h-20 md:w-28 md:h-28 lg:w-32 lg:h-32 object-contain" width="120"
+                                height="120" loading="eager">
+                            <div class="flex items-start">
+                                <span class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold leading-none">
                                     <%= weather.current.temperature %>
                                 </span>
-                                <span class="temp-unit">°C</span>
+                                <span class="text-2xl md:text-3xl font-medium mt-2">°C</span>
                             </div>
                         </div>
-                        <p class="weather-description">
+                        <p class="text-xl md:text-2xl capitalize mt-3 md:mt-4">
                             <%= weather.current.description %>
                         </p>
-                        <p class="feels-like">
-                            <%= __('result.feelsLike') %> <strong>
+                        <p class="text-white/60 mt-1">
+                            <%= __('result.feelsLike') %> <strong class="text-white">
                                     <%= weather.current.feelsLike %>°C
                                 </strong>
                         </p>
                     </div>
 
-                    <div class="weather-details-grid">
-                        <div class="detail-item">
-                            <span class="detail-icon">💧</span>
-                            <div class="detail-info">
-                                <span class="detail-label">
+                    <!-- Weather Details Grid -->
+                    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 md:gap-4">
+                        <div class="glass-card p-3 md:p-4 flex items-center gap-3">
+                            <span class="text-xl md:text-2xl">💧</span>
+                            <div>
+                                <p class="text-[10px] md:text-xs text-white/50 uppercase tracking-wide">
                                     <%= __('result.details.humidity') %>
-                                </span>
-                                <span class="detail-value">
+                                </p>
+                                <p class="font-semibold text-sm md:text-base">
                                     <%= weather.current.humidity %>%
-                                </span>
+                                </p>
                             </div>
                         </div>
-                        <div class="detail-item">
-                            <span class="detail-icon">💨</span>
-                            <div class="detail-info">
-                                <span class="detail-label">
+                        <div class="glass-card p-3 md:p-4 flex items-center gap-3">
+                            <span class="text-xl md:text-2xl">💨</span>
+                            <div>
+                                <p class="text-[10px] md:text-xs text-white/50 uppercase tracking-wide">
                                     <%= __('result.details.wind') %>
-                                </span>
-                                <span class="detail-value">
-                                    <%= weather.current.windSpeed %> m/s <%= __('windDirections.' +
-                                            getWindDirection(weather.current.windDeg)) %>
-                                </span>
+                                </p>
+                                <p class="font-semibold text-sm md:text-base">
+                                    <%= weather.current.windSpeed %> m/s
+                                </p>
                             </div>
                         </div>
-                        <div class="detail-item">
-                            <span class="detail-icon">👁️</span>
-                            <div class="detail-info">
-                                <span class="detail-label">
+                        <div class="glass-card p-3 md:p-4 flex items-center gap-3">
+                            <span class="text-xl md:text-2xl">👁️</span>
+                            <div>
+                                <p class="text-[10px] md:text-xs text-white/50 uppercase tracking-wide">
                                     <%= __('result.details.visibility') %>
-                                </span>
-                                <span class="detail-value">
+                                </p>
+                                <p class="font-semibold text-sm md:text-base">
                                     <%= weather.current.visibility %> km
-                                </span>
+                                </p>
                             </div>
                         </div>
-                        <div class="detail-item">
-                            <span class="detail-icon">🌡️</span>
-                            <div class="detail-info">
-                                <span class="detail-label">
+                        <div class="glass-card p-3 md:p-4 flex items-center gap-3">
+                            <span class="text-xl md:text-2xl">🌡️</span>
+                            <div>
+                                <p class="text-[10px] md:text-xs text-white/50 uppercase tracking-wide">
                                     <%= __('result.details.pressure') %>
-                                </span>
-                                <span class="detail-value">
+                                </p>
+                                <p class="font-semibold text-sm md:text-base">
                                     <%= weather.current.pressure %> hPa
-                                </span>
+                                </p>
                             </div>
                         </div>
-                        <div class="detail-item">
-                            <span class="detail-icon">🌅</span>
-                            <div class="detail-info">
-                                <span class="detail-label">
+                        <div class="glass-card p-3 md:p-4 flex items-center gap-3">
+                            <span class="text-xl md:text-2xl">🌅</span>
+                            <div>
+                                <p class="text-[10px] md:text-xs text-white/50 uppercase tracking-wide">
                                     <%= __('result.details.sunrise') %>
-                                </span>
-                                <span class="detail-value">
+                                </p>
+                                <p class="font-semibold text-sm md:text-base">
                                     <%= formatTime(weather.current.sunrise) %>
-                                </span>
+                                </p>
                             </div>
                         </div>
-                        <div class="detail-item">
-                            <span class="detail-icon">🌇</span>
-                            <div class="detail-info">
-                                <span class="detail-label">
+                        <div class="glass-card p-3 md:p-4 flex items-center gap-3">
+                            <span class="text-xl md:text-2xl">🌇</span>
+                            <div>
+                                <p class="text-[10px] md:text-xs text-white/50 uppercase tracking-wide">
                                     <%= __('result.details.sunset') %>
-                                </span>
-                                <span class="detail-value">
+                                </p>
+                                <p class="font-semibold text-sm md:text-base">
                                     <%= formatTime(weather.current.sunset) %>
-                                </span>
+                                </p>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Search Again -->
-                <form action="/weather" method="GET" class="search-form compact">
-                    <div class="search-wrapper">
-                        <span class="search-icon">🔍</span>
-                        <input type="text" name="city" placeholder="<%= __('result.searchAnother') %>"
-                            class="search-input" required autocomplete="off">
-                        <button type="submit" class="search-btn">
-                            <span>
-                                <%= __('result.searchButton') %>
-                            </span>
+                <!-- Search Another City -->
+                <form action="/weather" method="GET" class="max-w-lg mx-auto mt-8">
+                    <div class="flex gap-2 p-2 bg-white/10 border border-white/20 rounded-xl">
+                        <div class="flex items-center flex-1 gap-2 px-3">
+                            <span>🔍</span>
+                            <input type="text" name="city" placeholder="<%= __('result.searchAnother') %>"
+                                class="flex-1 bg-transparent border-none text-white placeholder-white/50 py-2 outline-none text-sm"
+                                required autocomplete="off">
+                        </div>
+                        <button type="submit" class="btn-primary py-2 px-4 text-sm">
+                            <%= __('result.searchButton') %>
                         </button>
                     </div>
                 </form>
@@ -137,36 +145,34 @@
         </section>
 
         <!-- Hourly Forecast -->
-        <section class="hourly-forecast-section">
-            <div class="container">
-                <h2>
-                    <span class="section-icon">⏰</span>
+        <section class="py-8 md:py-10 bg-black/20">
+            <div class="container mx-auto px-4">
+                <h2 class="flex items-center gap-2 text-lg md:text-xl font-semibold mb-6">
+                    <span class="text-2xl">⏰</span>
                     <%= __('result.hourlyForecast.title') %>
                 </h2>
 
-                <div class="hourly-scroll-container">
-                    <div class="hourly-cards">
+                <!-- Horizontal Scroll Container -->
+                <div
+                    class="overflow-x-auto pb-4 -mx-4 px-4 scrollbar-thin scrollbar-thumb-primary scrollbar-track-transparent">
+                    <div class="flex gap-3 md:gap-4">
                         <% weather.hourly.forEach((hour, index)=> { %>
-                            <article class="hourly-card<%= index === 0 ? ' current' : '' %>">
-                                <div class="hourly-time">
+                            <article
+                                class="flex-shrink-0 w-20 md:w-24 glass-card p-3 md:p-4 text-center hover:bg-white/10 hover:-translate-y-1 transition-all duration-300 <%= index === 0 ? 'bg-gradient-to-b from-primary to-primary-dark border-primary' : '' %>">
+                                <p class="font-semibold text-xs md:text-sm mb-2">
                                     <%= index===0 ? __('result.hourlyForecast.now') : formatTime(hour.dt) %>
-                                </div>
-                                <img src="<%= hour.iconUrl %>" alt="<%= hour.description %>" class="hourly-icon"
-                                    width="50" height="50" loading="lazy">
-                                <div class="hourly-temp">
+                                </p>
+                                <img src="<%= hour.iconUrl %>" alt="<%= hour.description %>"
+                                    class="w-10 h-10 md:w-12 md:h-12 mx-auto object-contain" width="50" height="50"
+                                    loading="lazy">
+                                <p class="text-lg md:text-xl font-bold my-2">
                                     <%= hour.temperature %>°
-                                </div>
-                                <div class="hourly-rain"
-                                    title="<%= currentLang === 'vi' ? 'Khả năng mưa' : 'Chance of rain' %>">
-                                    <span class="rain-icon">💧</span>
+                                </p>
+                                <div
+                                    class="flex items-center justify-center gap-1 text-[10px] md:text-xs text-white/60">
+                                    <span>💧</span>
                                     <span>
                                         <%= hour.pop %>%
-                                    </span>
-                                </div>
-                                <div class="hourly-wind">
-                                    <span class="wind-icon">💨</span>
-                                    <span>
-                                        <%= Math.round(hour.windSpeed) %> m/s
                                     </span>
                                 </div>
                             </article>
@@ -177,41 +183,52 @@
         </section>
 
         <!-- 5-Day Forecast -->
-        <section class="daily-forecast-section">
-            <div class="container">
-                <h2>
-                    <span class="section-icon">📅</span>
+        <section class="py-8 md:py-10">
+            <div class="container mx-auto px-4">
+                <h2 class="flex items-center gap-2 text-lg md:text-xl font-semibold mb-6">
+                    <span class="text-2xl">📅</span>
                     <%= __('result.dailyForecast.title') %>
                 </h2>
 
-                <div class="daily-cards">
+                <div class="flex flex-col gap-2 md:gap-3 max-w-3xl mx-auto">
                     <% weather.daily.forEach((day, index)=> { %>
-                        <article class="daily-card<%= index === 0 ? ' today' : '' %>">
-                            <div class="daily-day">
-                                <span class="day-name">
-                                    <%= index===0 ? __('result.dailyForecast.today') : formatShortDate(day.dt) %>
-                                </span>
+                        <article
+                            class="glass-card p-3 md:p-4 grid grid-cols-3 md:grid-cols-5 items-center gap-2 md:gap-4 hover:bg-white/10 transition-colors <%= index === 0 ? 'bg-gradient-to-r from-primary/20 to-transparent border-l-2 border-l-primary' : '' %>">
+                            <!-- Day -->
+                            <div class="font-semibold text-sm md:text-base">
+                                <%= index===0 ? __('result.dailyForecast.today') : formatShortDate(day.dt) %>
                             </div>
-                            <img src="<%= day.iconUrl %>" alt="<%= day.description %>" class="daily-icon" width="50"
-                                height="50" loading="lazy">
-                            <div class="daily-desc">
+
+                            <!-- Icon -->
+                            <div class="flex justify-center">
+                                <img src="<%= day.iconUrl %>" alt="<%= day.description %>"
+                                    class="w-10 h-10 md:w-12 md:h-12 object-contain" width="50" height="50"
+                                    loading="lazy">
+                            </div>
+
+                            <!-- Description (hidden on small mobile) -->
+                            <div class="hidden md:block text-sm text-white/60 capitalize">
                                 <%= day.description %>
                             </div>
-                            <div class="daily-temps">
-                                <span class="temp-high">
+
+                            <!-- Temps -->
+                            <div class="flex items-center gap-2 justify-end md:justify-center">
+                                <span class="font-bold text-sm md:text-base">
                                     <%= day.tempMax %>°
                                 </span>
-                                <div class="temp-bar">
-                                    <div class="temp-range"
-                                        style="--min: <%= (day.tempMin + 10) / 50 * 100 %>%; --max: <%= (day.tempMax + 10) / 50 * 100 %>%;">
+                                <div class="hidden sm:block w-16 h-1.5 bg-white/10 rounded-full overflow-hidden">
+                                    <div class="h-full bg-gradient-to-r from-accent-blue to-primary rounded-full"
+                                        style="margin-left: <%= (day.tempMin + 10) / 50 * 100 %>%; width: <%= (day.tempMax - day.tempMin) / 50 * 100 %>%;">
                                     </div>
                                 </div>
-                                <span class="temp-low">
+                                <span class="text-white/60 text-sm md:text-base">
                                     <%= day.tempMin %>°
                                 </span>
                             </div>
-                            <div class="daily-rain">
-                                <span class="rain-icon">💧</span>
+
+                            <!-- Rain -->
+                            <div class="flex items-center gap-1 text-xs md:text-sm text-accent-cyan justify-end">
+                                <span>💧</span>
                                 <span>
                                     <%= day.pop %>%
                                 </span>

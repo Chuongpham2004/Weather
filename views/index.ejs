@@ -1,34 +1,45 @@
 <%- include('partials/header') %>
 
-  <main class="main-content">
-    <section class="hero-section">
-      <div class="container">
-        <div class="hero-content">
-          <h1>
+  <!-- Main Content -->
+  <main class="flex-1">
+    <!-- Hero Section -->
+    <section class="py-12 md:py-20">
+      <div class="container mx-auto px-4">
+        <div class="text-center max-w-3xl mx-auto">
+          <!-- Heading -->
+          <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-6 leading-tight">
             <%= __('home.hero.heading') %>
           </h1>
-          <p class="hero-subtitle">
+          <p class="text-lg md:text-xl text-white/70 mb-8 md:mb-10">
             <%= __('home.hero.subheading') %>
           </p>
 
-          <form action="/weather" method="GET" class="search-form" id="weather-search">
-            <div class="search-wrapper">
-              <span class="search-icon">🔍</span>
-              <input type="text" name="city" placeholder="<%= __('home.search.placeholder') %>" class="search-input"
-                value="<%= city || '' %>" required autocomplete="off"
-                aria-label="<%= currentLang === 'vi' ? 'Tên thành phố' : 'City name' %>">
-              <button type="submit" class="search-btn">
+          <!-- Search Form -->
+          <form action="/weather" method="GET" class="max-w-xl mx-auto mb-6" id="weather-search">
+            <div
+              class="flex flex-col sm:flex-row gap-3 p-2 bg-white/10 border-2 border-white/20 rounded-2xl focus-within:border-primary transition-colors">
+              <div class="flex items-center flex-1 gap-3 px-4">
+                <span class="text-xl">🔍</span>
+                <input type="text" name="city" placeholder="<%= __('home.search.placeholder') %>"
+                  class="flex-1 bg-transparent border-none text-white placeholder-white/50 py-3 outline-none text-base md:text-lg"
+                  value="<%= city || '' %>" required autocomplete="off"
+                  aria-label="<%= currentLang === 'vi' ? 'Tên thành phố' : 'City name' %>">
+              </div>
+              <button type="submit" class="btn-primary flex items-center justify-center gap-2 w-full sm:w-auto">
                 <span>
                   <%= __('home.search.button') %>
                 </span>
-                <span class="btn-arrow">→</span>
+                <span class="transition-transform group-hover:translate-x-1">→</span>
               </button>
             </div>
           </form>
 
           <% if (typeof error !=='undefined' && error) { %>
-            <div class="error-message" role="alert">
-              <span class="error-icon">⚠️</span>
+            <!-- Error Message -->
+            <div
+              class="flex items-center justify-center gap-3 bg-red-500/15 border border-red-500/30 text-red-400 px-6 py-4 rounded-xl mt-4"
+              role="alert">
+              <span class="text-xl">⚠️</span>
               <p>
                 <%= error %>
               </p>
@@ -36,31 +47,33 @@
             <% } %>
         </div>
 
-        <div class="hero-features">
-          <div class="feature-card">
-            <span class="feature-icon">⏰</span>
-            <h3>
+        <!-- Feature Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 mt-12 md:mt-16 max-w-4xl mx-auto">
+          <div class="glass-card p-6 text-center hover:bg-white/10 hover:-translate-y-1 transition-all duration-300">
+            <span class="text-4xl md:text-5xl block mb-4">⏰</span>
+            <h3 class="font-semibold text-lg mb-2">
               <%= __('home.features.hourly.title') %>
             </h3>
-            <p>
+            <p class="text-white/60 text-sm">
               <%= __('home.features.hourly.description') %>
             </p>
           </div>
-          <div class="feature-card">
-            <span class="feature-icon">📅</span>
-            <h3>
+          <div class="glass-card p-6 text-center hover:bg-white/10 hover:-translate-y-1 transition-all duration-300">
+            <span class="text-4xl md:text-5xl block mb-4">📅</span>
+            <h3 class="font-semibold text-lg mb-2">
               <%= __('home.features.daily.title') %>
             </h3>
-            <p>
+            <p class="text-white/60 text-sm">
               <%= __('home.features.daily.description') %>
             </p>
           </div>
-          <div class="feature-card">
-            <span class="feature-icon">🌍</span>
-            <h3>
+          <div
+            class="glass-card p-6 text-center hover:bg-white/10 hover:-translate-y-1 transition-all duration-300 sm:col-span-2 lg:col-span-1">
+            <span class="text-4xl md:text-5xl block mb-4">🌍</span>
+            <h3 class="font-semibold text-lg mb-2">
               <%= __('home.features.global.title') %>
             </h3>
-            <p>
+            <p class="text-white/60 text-sm">
               <%= __('home.features.global.description') %>
             </p>
           </div>
@@ -68,41 +81,48 @@
       </div>
     </section>
 
-    <section class="popular-cities">
-      <div class="container">
-        <h2>
+    <!-- Popular Cities -->
+    <section class="py-12 md:py-16 bg-black/20">
+      <div class="container mx-auto px-4">
+        <h2 class="text-xl md:text-2xl font-semibold text-center mb-8">
           <%= __('home.popularCities.title') %>
         </h2>
-        <div class="cities-grid">
-          <a href="/weather?city=Hanoi" class="city-card">
-            <span class="city-icon">🏛️</span>
-            <span class="city-name">
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3 md:gap-4 max-w-4xl mx-auto">
+          <a href="/weather?city=Hanoi"
+            class="glass-card p-4 md:p-5 flex flex-col items-center gap-2 hover:bg-white/10 hover:border-primary hover:scale-105 transition-all duration-300">
+            <span class="text-2xl md:text-3xl">🏛️</span>
+            <span class="font-medium text-sm md:text-base">
               <%= currentLang==='vi' ? 'Hà Nội' : 'Hanoi' %>
             </span>
           </a>
-          <a href="/weather?city=Ho Chi Minh" class="city-card">
-            <span class="city-icon">🌆</span>
-            <span class="city-name">
+          <a href="/weather?city=Ho Chi Minh"
+            class="glass-card p-4 md:p-5 flex flex-col items-center gap-2 hover:bg-white/10 hover:border-primary hover:scale-105 transition-all duration-300">
+            <span class="text-2xl md:text-3xl">🌆</span>
+            <span class="font-medium text-sm md:text-base">
               <%= currentLang==='vi' ? 'Hồ Chí Minh' : 'Ho Chi Minh' %>
             </span>
           </a>
-          <a href="/weather?city=Da Nang" class="city-card">
-            <span class="city-icon">🏖️</span>
-            <span class="city-name">
+          <a href="/weather?city=Da Nang"
+            class="glass-card p-4 md:p-5 flex flex-col items-center gap-2 hover:bg-white/10 hover:border-primary hover:scale-105 transition-all duration-300">
+            <span class="text-2xl md:text-3xl">🏖️</span>
+            <span class="font-medium text-sm md:text-base">
               <%= currentLang==='vi' ? 'Đà Nẵng' : 'Da Nang' %>
             </span>
           </a>
-          <a href="/weather?city=Tokyo" class="city-card">
-            <span class="city-icon">🗼</span>
-            <span class="city-name">Tokyo</span>
+          <a href="/weather?city=Tokyo"
+            class="glass-card p-4 md:p-5 flex flex-col items-center gap-2 hover:bg-white/10 hover:border-primary hover:scale-105 transition-all duration-300">
+            <span class="text-2xl md:text-3xl">🗼</span>
+            <span class="font-medium text-sm md:text-base">Tokyo</span>
           </a>
-          <a href="/weather?city=Singapore" class="city-card">
-            <span class="city-icon">🏙️</span>
-            <span class="city-name">Singapore</span>
+          <a href="/weather?city=Singapore"
+            class="glass-card p-4 md:p-5 flex flex-col items-center gap-2 hover:bg-white/10 hover:border-primary hover:scale-105 transition-all duration-300">
+            <span class="text-2xl md:text-3xl">🏙️</span>
+            <span class="font-medium text-sm md:text-base">Singapore</span>
           </a>
-          <a href="/weather?city=London" class="city-card">
-            <span class="city-icon">🎡</span>
-            <span class="city-name">London</span>
+          <a href="/weather?city=London"
+            class="glass-card p-4 md:p-5 flex flex-col items-center gap-2 hover:bg-white/10 hover:border-primary hover:scale-105 transition-all duration-300">
+            <span class="text-2xl md:text-3xl">🎡</span>
+            <span class="font-medium text-sm md:text-base">London</span>
           </a>
         </div>
       </div>

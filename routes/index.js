@@ -17,7 +17,9 @@ router.get('/weather', async function (req, res, next) {
   const city = req.query.city;
 
   if (!city || city.trim() === '') {
-    return res.redirect('/');
+    // Redirect to homepage with language prefix
+    const lang = req.getLocale();
+    return res.redirect(`/${lang}/`);
   }
 
   const weather = await weatherService.getWeatherData(city.trim());

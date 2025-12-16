@@ -16,56 +16,116 @@
 
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website">
+  <meta property="og:url" content="<%= baseUrl %><%= currentPath %>">
   <meta property="og:title" content="<%= title %>">
   <meta property="og:description" content="<%= description %>">
   <meta property="og:site_name" content="<%= __('app.name') %>">
   <meta property="og:locale" content="<%= currentLang === 'vi' ? 'vi_VN' : 'en_US' %>">
+  <meta property="og:locale:alternate" content="<%= currentLang === 'vi' ? 'en_US' : 'vi_VN' %>">
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="<%= title %>">
   <meta name="twitter:description" content="<%= description %>">
 
-  <!-- Preconnect for performance -->
-  <link rel="preconnect" href="https://openweathermap.org">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Canonical URL - Current language version -->
+  <link rel="canonical" href="<%= baseUrl %><%= currentPath %>">
+
+  <!-- Alternate Language Links (hreflang) - Point to each language version -->
+  <link rel="alternate" hreflang="vi" href="<%= baseUrl %>/vi<%= pathWithoutLang %>">
+  <link rel="alternate" hreflang="en" href="<%= baseUrl %>/en<%= pathWithoutLang %>">
+  <link rel="alternate" hreflang="x-default" href="<%= baseUrl %>/vi<%= pathWithoutLang %>">
+
+  <!-- Tailwind CSS CDN v3 -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              DEFAULT: '#f05514',
+              dark: '#d14810',
+              light: '#ff6b2b'
+            },
+            secondary: {
+              DEFAULT: '#1a1a2e',
+              light: '#252541'
+            },
+            accent: {
+              blue: '#4a90d9',
+              cyan: '#00c8ff'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
 
   <!-- Google Fonts - Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-  <!-- Stylesheets -->
-  <link rel="stylesheet" href="/stylesheets/style.css">
+  <!-- Custom styles for specific components -->
+  <style type="text/tailwindcss">
+    @layer components {
+      .glass-card {
+        @apply bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl;
+      }
+      .btn-primary {
+        @apply bg-primary hover:bg-primary-dark text-white font-semibold px-6 py-3 rounded-xl transition-all duration-200;
+      }
+      .gradient-bg {
+        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      }
+    }
+  </style>
 
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml"
     href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌤️</text></svg>">
 </head>
 
-<body>
-  <header class="site-header">
-    <div class="container">
-      <a href="/" class="logo">
-        <span class="logo-icon">🌤️</span>
-        <span class="logo-text">
-          <%= __('app.name') %>
-        </span>
-      </a>
-      <nav class="main-nav">
-        <a href="/" class="nav-link">
-          <%= __('nav.home') %>
+<body class="gradient-bg min-h-screen text-white font-sans">
+  <!-- Header -->
+  <header class="sticky top-0 z-50 bg-secondary/95 backdrop-blur-md border-b border-white/10">
+    <div class="container mx-auto px-4">
+      <div class="flex flex-wrap items-center justify-between h-16 md:h-16">
+        <!-- Logo -->
+        <a href="/<%= currentLang %>/"
+          class="flex items-center gap-2 text-white font-bold text-xl hover:text-primary transition-colors">
+          <span class="text-2xl">🌤️</span>
+          <span class="hidden sm:inline">
+            <%= __('app.name') %>
+          </span>
         </a>
-        <a href="/about" class="nav-link">
-          <%= __('nav.about') %>
-        </a>
-        <div class="lang-switcher">
-          <% languages.forEach(function(lang) { %>
-            <a href="/lang/<%= lang.code %>" class="lang-btn <%= currentLang === lang.code ? 'active' : '' %>"
-              title="<%= lang.name %>">
-              <%= lang.flag %>
-            </a>
-            <% }); %>
-        </div>
-      </nav>
+
+        <!-- Navigation -->
+        <nav class="flex items-center gap-2 md:gap-6">
+          <a href="/<%= currentLang %>/"
+            class="text-white/70 hover:text-white hover:bg-white/5 px-3 py-2 rounded-lg font-medium transition-all text-sm md:text-base">
+            <%= __('nav.home') %>
+          </a>
+          <a href="/<%= currentLang %>/about"
+            class="text-white/70 hover:text-white hover:bg-white/5 px-3 py-2 rounded-lg font-medium transition-all text-sm md:text-base">
+            <%= __('nav.about') %>
+          </a>
+
+          <!-- Language Switcher - Now links to same page in different language -->
+          <div class="flex gap-1 ml-2 md:ml-4 pl-2 md:pl-4 border-l border-white/10">
+            <% languages.forEach(function(lang) { %>
+              <a href="/<%= lang.code %><%= pathWithoutLang %>"
+                class="w-8 h-8 flex items-center justify-center text-lg rounded-lg transition-all <%= currentLang === lang.code ? 'bg-white/10 ring-2 ring-primary' : 'opacity-60 hover:opacity-100 hover:bg-white/5' %>"
+                title="<%= lang.name %>">
+                <%= lang.flag %>
+              </a>
+              <% }); %>
+          </div>
+        </nav>
+      </div>
     </div>
   </header>
