@@ -6,9 +6,82 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var i18n = require('i18n');
 
+// Security & Performance Modules
+var helmet = require('helmet');
+var rateLimit = require('express-rate-limit');
+var compression = require('compression');
+var cors = require('cors');
+
 var indexRouter = require('./routes/index');
 
 var app = express();
+
+// ===========================================
+// SECURITY MIDDLEWARE
+// ===========================================
+
+// 1. Helmet - Security Headers (XSS, ClickJacking, etc.)
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'", "'unsafe-inline'", "https://cdn.tailwindcss.com"],
+      styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
+      fontSrc: ["'self'", "https://fonts.gstatic.com"],
+      imgSrc: ["'self'", "https://openweathermap.org", "data:"],
+      connectSrc: ["'self'", "https://api.openweathermap.org"]
+    }
+  },
+  crossOriginEmbedderPolicy: false // Allow loading external resources
+}));
+
+// 2. Rate Limiting - Prevent spam/DDoS
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // Limit each IP to 100 requests per windowMs
+  message: {
+    error: 'Too many requests from this IP, please try again after 15 minutes'
+  },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+app.use(limiter);
+
+// Stricter limit for weather API
+const apiLimiter = rateLimit({
+  windowMs: 1 * 60 * 1000, // 1 minute
+  max: 30, // 30 requests per minute per IP
+  message: {
+    error: 'Too many weather requests, please slow down'
+  }
+});
+
+// 3. CORS - Cross-Origin Resource Sharing
+app.use(cors({
+  origin: process.env.BASE_URL || 'http://localhost:3001',
+  methods: ['GET', 'POST'],
+  credentials: true
+}));
+
+// 4. Compression - Gzip responses (HTML, CSS, JS)
+app.use(compression({
+  level: 6, // Compression level (1-9)
+  threshold: 1024, // Only compress if > 1KB
+  filter: (req, res) => {
+    if (req.headers['x-no-compression']) {
+      return false;
+    }
+    return compression.filter(req, res);
+  }
+}));
+
+// 5. Body Size Limit - Prevent large payload attacks
+app.use(express.json({ limit: '10kb' })); // Max 10KB JSON body
+app.use(express.urlencoded({ extended: false, limit: '10kb' })); // Max 10KB form data
+
+// ===========================================
+// STANDARD MIDDLEWARE
+// ===========================================
 
 // Supported languages
 const SUPPORTED_LOCALES = ['vi', 'en'];
@@ -29,9 +102,10 @@ i18n.configure({
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+// Trust proxy (for Vercel/Heroku)
+app.set('trust proxy', 1);
+
 app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 // Initialize i18n
@@ -45,6 +119,11 @@ app.use(express.static(path.join(__dirname, 'public'), {
 
 // Language detection middleware from URL
 app.use((req, res, next) => {
+  // Skip static files
+  if (req.path.match(/\.(css|js|png|jpg|ico|xml|txt)$/)) {
+    return next();
+  }
+
   // Extract language from URL path (e.g., /vi/weather or /en/about)
   const pathParts = req.path.split('/').filter(Boolean);
   const firstPart = pathParts[0];
@@ -127,6 +206,13 @@ app.use((req, res, next) => {
   next();
 });
 
+// ===========================================
+// ROUTES
+// ===========================================
+
+// Apply stricter rate limit to weather routes
+app.use('/:lang(vi|en)/weather', apiLimiter);
+
 // Routes with language prefix
 app.use('/:lang(vi|en)', indexRouter);
 
@@ -135,6 +221,10 @@ app.get('/', (req, res) => {
   const targetLang = req.cookies.lang || DEFAULT_LOCALE;
   res.redirect(301, `/${targetLang}/`);
 });
+
+// ===========================================
+// ERROR HANDLING
+// ===========================================
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
